@@ -27,7 +27,7 @@
         <div id="quake-control-panel" class="fluid">
             <div id="feed-chooser">
                 <h1 class="control-panel-header">Choose Data Feed</h1>
-                <form class="control-panel-item">
+                <form class="control-panel-item" id="retrieveQuakes">
                     <label>Data Feed</label>
                     <select>
                         <option>7 Days, M2.5+</option>
@@ -37,6 +37,8 @@
                         <option>30 Days, All</option>
 
                     </select>
+                    <br />
+                    <input type="submit" value="Retrieve"/>
                 </form>
             </div>
             <div id="feed-summary">
