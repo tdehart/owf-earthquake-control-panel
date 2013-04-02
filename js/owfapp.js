@@ -1,44 +1,49 @@
 if (OWF.Util.isRunningInOWF()) {
-	// -----------------------------------
-	// Initialize
-	// -----------------------------------
-	OWF.ready(function() {
-		$('#retrieveQuakes').submit(function() {
-			// OWF.getOpenedWidgets(function(widgets) {
-			// 	var widget;
+    // -----------------------------------
+    // Initialize
+    // -----------------------------------
+    OWF.ready(function() {
+        $('#retrieveQuakes').submit(function() {
+            OWF.getOpenedWidgets(function(widgets) {
+                var widget;
 
-			// 	for (var i = 0; i < widgets.length; i++) {
-			// 		if (widgets[i].universalName === 'org.owfgoss.owf.examples.earthquake.data') {
-			// 			widget = widgets[i];
-			// 			break;
-			// 		}
-			// 	}
+                for (var i = 0; i < widgets.length; i++) {
+                    if (widgets[i].universalName === 'org.owfgoss.owf.examples.earthquake.data') {
+                        widget = widgets[i];
+                        break;
+                    }
+                }
 
-			// 	if (widget) {
-			// 		OWF.RPC.getWidgetProxy(widget.id, function(proxy) {
-			// 			proxy.onReady(function() {
-			// 				console.log(proxy);
-			// 				var quakes = proxy.getData();
-			// 				console.log(quakes);
-			// 			});
-			// 		});
-			// 	}
-			// });
+                if (widget) {
+                    OWF.RPC.getWidgetProxy(widget.id, function(proxy) {
+                        console.log("Got earthquake proxy");
+                        console.log(proxy);
 
-			OWF.Intents.startActivity(
-                {
-                    action: 'plotQuakes',
-                    dataType: 'application/vnd.owf.sample.quakes'
-                },
-                ControlPanel.getFilteredQuakes(),
-                function(dest) { }
-            );
+                        proxy.getData(function(result) {
+                            console.log("Earthquake Data:" + result);
 
-			return false;
-		});
+                            // TODO: Merge new quake data into Control  Panel
 
-		OWF.notifyWidgetReady();
+                            OWF.Intents.startActivity(
+                                {
+                                    action: 'plotQuakes',
+                                    dataType: 'application/vnd.owf.sample.quakes'
+                                },
+                                ControlPanel.getFilteredQuakes(),
+                                function(dest) { }
+                            );
+                        });
+                    });
+                } else {
+                    console.log("Earthquake data widget is not open!");
+                }
+            });
 
-		console.log("Earthquake Control Panel ready.");
-	});
+            return false;
+        });
+
+        OWF.notifyWidgetReady();
+
+        console.log("Earthquake Control Panel ready.");
+    });
 }
