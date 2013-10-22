@@ -20,7 +20,7 @@ if (OWF.Util.isRunningInOWF()) {
                         console.log(proxy);
 
                         proxy.getData(function(result) {
-                            console.log("Earthquake Data:" + result);
+                            ControlPanel.setQuakes(result);
 
                             // TODO: Merge new quake data into Control  Panel
 
@@ -30,7 +30,7 @@ if (OWF.Util.isRunningInOWF()) {
                                     dataType: 'application/vnd.owf.sample.quakes'
                                 },
                                 ControlPanel.getFilteredQuakes(),
-                                function(dest) { }
+                                function(dest) {}
                             );
                         });
                     });
